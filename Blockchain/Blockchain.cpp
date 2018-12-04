@@ -1,8 +1,6 @@
 #include "Blockchain.h"
-#include <ctime>
 
 
-// Blockchain Constructor
 Blockchain::Blockchain(){}
 
 vector<Block> Blockchain::getBlockchain() { return blockchain; }

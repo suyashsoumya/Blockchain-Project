@@ -1,8 +1,5 @@
-#include <ctime>
 #include "Block.h"
 #include "Blockchain.h"
-
-using namespace std;
 
 int main(){
 

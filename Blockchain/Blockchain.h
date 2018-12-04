@@ -2,6 +2,7 @@
 #define _BLOCKCHAIN_H
 
 #include <vector>
+#include <ctime>
 #include "Block.h"
 
 class Blockchain{
