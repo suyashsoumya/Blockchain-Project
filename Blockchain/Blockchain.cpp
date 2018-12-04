@@ -1,19 +1,14 @@
 #include "Blockchain.h"
-
 #include <ctime>
 
 
 // Blockchain Constructor
 Blockchain::Blockchain(){}
 
-vector<Block> Blockchain::getBlockchain() {
-    return blockchain;
-}
+vector<Block> Blockchain::getBlockchain() { return blockchain; }
 
 
-Block Blockchain::getLastBlock(){
-    return blockchain.back();
-}
+Block Blockchain::getLastBlock(){ return blockchain.back(); }
 
 
 bool Blockchain::isBlockchainValid(){
@@ -29,8 +24,7 @@ bool Blockchain::isBlockchainValid(){
     return true;
 }
 
-void Blockchain::addBlock(string data, time_t timestamp)
-{
+void Blockchain::addBlock(string data, time_t timestamp){
     int index = blockchain.size();
     string prevHash;
     if(blockchain.size() > 0){
@@ -38,10 +32,8 @@ void Blockchain::addBlock(string data, time_t timestamp)
     }else{
         prevHash = "0";
     }
-    //string prevHash = (int)blockchain.size() > 0 ? this->getLastBlock()->getHash() : 0;
     Block newBlock (index, data, prevHash, timestamp);
     blockchain.push_back(newBlock);
-
 }
 
 void Blockchain::displayBlockchain() {
@@ -54,7 +46,7 @@ void Blockchain::displayBlockchain() {
             cout << "Index: " <<currBlock.getIndex() << endl;
             cout << "Data: " << currBlock.getData() << endl;
             cout << "Timestamp: " << currBlock.getTimestamp() << endl;
-            cout <<"Hash: " << currBlock.getHash() << endl;
+            cout << "Hash: " << currBlock.getHash() << endl;
             cout << "Previous Hash: " << currBlock.getPrevHash() << endl;
             cout << "Is Block Valid?: " << currBlock.isHashValid() << endl;
         }

@@ -1,5 +1,4 @@
 #include "Block.h"
-//#include "openssl\sha.h"
 #include "sha256.h"
 
 
@@ -27,6 +26,4 @@ string Block::genHash(){
     return sha256(toHash);
 }
 
-bool Block::isHashValid() { 
-    return genHash() == getHash(); 
-}
+bool Block::isHashValid() { return genHash() == getHash(); }

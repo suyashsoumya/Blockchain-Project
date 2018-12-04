@@ -7,7 +7,6 @@
 class Blockchain{
 private:
     vector<Block> blockchain;
-
 public:
     Blockchain();
     vector<Block> getBlockchain();
@@ -15,7 +14,6 @@ public:
     bool isBlockchainValid();
     void addBlock(string data, time_t timestamp);
     void displayBlockchain();
-
 };
 
 #endif 

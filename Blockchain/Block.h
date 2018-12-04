@@ -13,22 +13,14 @@ private:
     string hash;
     string prevHash;
     time_t timestamp;
-    
 public:
     Block(int index, string data, string prevHash, time_t timestamp);
-    
     int getIndex();
-    
     string getData();
-    
     string getHash();
-    
     string getPrevHash();
-
     time_t getTimestamp();
-
     string genHash();
-
     bool isHashValid();
 };
 
