@@ -13,6 +13,7 @@ private:
     string hash;
     string prevHash;
     time_t timestamp;
+    int nonce;
 public:
     Block(int index, string data, string prevHash, time_t timestamp);
     int getIndex();
@@ -21,7 +22,7 @@ public:
     string getPrevHash();
     time_t getTimestamp();
     string genHash();
-    bool isHashValid();
+    void mine(int difficulty);
 };
 
 #endif 

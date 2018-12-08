@@ -1,7 +1,9 @@
 #include "Blockchain.h"
 
 
-Blockchain::Blockchain(){}
+Blockchain::Blockchain(){
+    difficulty = 1;
+}
 
 vector<Block> Blockchain::getBlockchain() { return blockchain; }
 
@@ -10,14 +12,12 @@ Block Blockchain::getLastBlock(){ return blockchain.back(); }
 
 
 bool Blockchain::isBlockchainValid(){
-    if(blockchain.size() == 0){
-        return true;
-    }
-    for (int i = 0; i < blockchain.size(); ++i){
+    if(blockchain.size() == 0){ return true; }
+    for (int i = 1; i < blockchain.size(); ++i){
         Block currBlock = blockchain[i];
-        if (!currBlock.isHashValid()){
-            return false;
-        }
+        Block prevBlock = blockchain[i-1];
+        if(currBlock.getHash() != currBlock.genHash()){ return false; } 
+        if(currBlock.getPrevHash() != prevBlock.getHash()){ return false; } 
     }
     return true;
 }
@@ -31,6 +31,7 @@ void Blockchain::addBlock(string data, time_t timestamp){
         prevHash = "0";
     }
     Block newBlock (index, data, prevHash, timestamp);
+    newBlock.mine(difficulty);
     blockchain.push_back(newBlock);
 }
 
@@ -46,7 +47,6 @@ void Blockchain::displayBlockchain() {
             cout << "Timestamp: " << currBlock.getTimestamp() << endl;
             cout << "Hash: " << currBlock.getHash() << endl;
             cout << "Previous Hash: " << currBlock.getPrevHash() << endl;
-            cout << "Is Block Valid?: " << currBlock.isHashValid() << endl;
         }
     }
 

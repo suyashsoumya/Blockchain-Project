@@ -8,6 +8,7 @@
 class Blockchain{
 private:
     vector<Block> blockchain;
+    int difficulty;
 public:
     Blockchain();
     vector<Block> getBlockchain();
