@@ -32,7 +32,6 @@ void Block::mine(int difficulty) {
     for (int i = 0; i < difficulty; ++i){
         zeros += "0";
     }
-    cout << zeros << endl;
     while(hash.substr(0, difficulty) != zeros){
           nonce++;
           hash = genHash();
