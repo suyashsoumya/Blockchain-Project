@@ -19,54 +19,34 @@ const int BUFFSIZE = 1024;
 const int MAXLINK = 10;
 const int DEFAULT_PORT = 8080;
 
-char* get_file_name (char* buff) {
-    char* file_name = buff + 5;
-    char *space = strchr(file_name, ' ');
-    *space = '\0';
-    return file_name;
-}
 
-void deal_get_http(int connect_fd, char* buff) {
-    char* file_name = get_file_name(buff);
-    const char http_correct_header[] = "HTTP/1.1 200 OK\r\nContent-type: text/html\r\n\r\n";
-    int res = write(connect_fd, http_correct_header, strlen(http_correct_header));
-    if (res > 0) {
-        cout<<"send success"<<endl;
-    }
-}
 
-bool is_get_http(char* buff) {
-    if (!strncmp(buff, "GET", 3)) {
-        return true;
-    }
-    else {
-        return false;
-    }
-}
-
-void broadcastthread(Blockchain& b, int connect_fd){
+void broadcastthread(Blockchain* b,  int connect_fd){
     
-    
-    sleep(30);
-    string temp = b.returnBlockchainAsString();
+    while(true){
+    sleep(10);
+    string temp = b->returnBlockchainAsString();
+    int size = temp.length();
+    //string temp = "" ;
     const char* s= temp.c_str();
-    send(connect_fd, s, sizeof(s) ,0);
+    send(connect_fd, s, size ,0);
     // fill it with your output char * s = b.output();
+    }
 }
 
-void addingthread(char* buff, int connect_fd, int socket_fd , Blockchain& b){
+void addingthread(char* buff, int connect_fd, int socket_fd , Blockchain* b){
     
     
-    thread broadcast(broadcastthread, b, connect_fd);
-    //broadcast.join();
+    thread broadcast(broadcastthread, b ,connect_fd);
+    broadcast.detach();
     memset(buff, '\0', sizeof(buff));
     recv(connect_fd, buff, BUFFSIZE - 1, 0);
     cout<<buff<<endl;
     //
     time_t time1;
-    b.addBlock(buff, time(&time1));
+    b->addBlock(buff, time(&time1));
     //
-    send(connect_fd, buff, sizeof(buff), 0);
+    //send(connect_fd, buff, sizeof(buff), 0);
     close(connect_fd);
     //close(socket_fd);
     
@@ -77,7 +57,7 @@ void addingthread(char* buff, int connect_fd, int socket_fd , Blockchain& b){
 
 int main(){
 
-    Blockchain b(4); // pass in difficulty value
+    Blockchain b(5); // pass in difficulty value
     
     cout << "Mining Block 0..." << endl;
     time_t time1;
@@ -91,6 +71,7 @@ int main(){
     
     //b.displayBlockchain();
     cout << b.returnBlockchainAsString() << endl;
+    
     
     // network
     
@@ -128,7 +109,7 @@ int main(){
         }
         else {
             cout<<"Connect Success"<<endl;
-            thread task(addingthread, buff, connect_fd, socket_fd,  b);
+            thread task(addingthread, buff, connect_fd, socket_fd, &b);
             task.detach();
             
         }

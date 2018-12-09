@@ -33,6 +33,10 @@ void Blockchain::addBlock(string data, time_t timestamp){
     Block newBlock (index, data, prevHash, timestamp);
     newBlock.mine(difficulty);
     blockchain.push_back(newBlock);
+    while(!isBlockchainValid()){
+        blockchain.pop_back();
+        cout<<" Invalid Blocks found, pop it out....."<<endl;
+    }
 }
 
 void Blockchain::displayBlockchain() {
