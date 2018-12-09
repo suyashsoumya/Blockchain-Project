@@ -16,6 +16,7 @@ public:
     bool isBlockchainValid();
     void addBlock(string data, time_t timestamp);
     void displayBlockchain();
+    string returnBlockchainAsString();
 };
 
 #endif 

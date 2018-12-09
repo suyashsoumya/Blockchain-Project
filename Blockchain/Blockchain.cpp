@@ -49,7 +49,24 @@ void Blockchain::displayBlockchain() {
             cout << "Previous Hash: " << currBlock.getPrevHash() << endl;
         }
     }
-
-
 }
+
+string Blockchain::returnBlockchainAsString(){
+    if(blockchain.size() == 0){
+        return "No blocks in this blockchain\n";
+    }else{
+        string blockchainInfo = "";
+        for (int i = 0; i < blockchain.size(); ++i){
+                Block currBlock = blockchain[i];
+                blockchainInfo += "Block=======================================\n";
+                blockchainInfo += "Index: " + to_string(currBlock.getIndex()) + "\n";
+                blockchainInfo += "Data: " + currBlock.getData() + "\n";
+                blockchainInfo += "Timestamp: " + to_string(currBlock.getTimestamp()) + "\n";
+                blockchainInfo += "Hash: " + currBlock.getHash() + "\n";
+                blockchainInfo += "Previous Hash: " + currBlock.getPrevHash() + "\n";
+            }
+        return blockchainInfo;
+    }
+}
+
 
