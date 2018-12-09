@@ -2,6 +2,7 @@
 
 ## Blockchain <br />
 ### Run On Command Line Example: <br />
+* First: be in the Blockchain directory
 * Compile: g++ -o test Block.cpp Blockchain.cpp sha256.cpp main.cpp <br />
 * Run Output File: test <br />
 #### Resources: <br />
