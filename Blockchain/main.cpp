@@ -5,7 +5,7 @@
 #include <cstring>
 #include <cstdlib>
 #include <sys/types.h>
-#include <Winsock2.h>
+#include <sys/socket.h>
 #include <unistd.h>
 #include <netinet/in.h>
 #include <fstream>
@@ -44,11 +44,21 @@ bool is_get_http(char* buff) {
     }
 }
 
-void addingthread(char* buff, int connect_fd, int socket_fd, &Blockchain b){
+void broadcastthread(Blockchain& b, int connect_fd){
+    
+    
+    sleep(30);
+    string temp = b.returnBlockchainAsString();
+    const char* s= temp.c_str();
+    send(connect_fd, s, sizeof(s) ,0);
+    // fill it with your output char * s = b.output();
+}
+
+void addingthread(char* buff, int connect_fd, int socket_fd , Blockchain& b){
     
     
     thread broadcast(broadcastthread, b, connect_fd);
-    broadcast.detach();
+    //broadcast.join();
     memset(buff, '\0', sizeof(buff));
     recv(connect_fd, buff, BUFFSIZE - 1, 0);
     cout<<buff<<endl;
@@ -62,14 +72,7 @@ void addingthread(char* buff, int connect_fd, int socket_fd, &Blockchain b){
     
 }
 
-void broadcastthread(&Blockchain b, int connect_fd){
-    
-    
-    sleep(30);
-    char * s= b.returnBlockchainAsString();
-    send(connect_fd, s, sizeof(s) ,0);
-    // fill it with your output char * s = b.output();
-}
+
 
 
 int main(){
@@ -125,7 +128,7 @@ int main(){
         }
         else {
             cout<<"Connect Success"<<endl;
-            thread task(addingthread, buff, connect_fd, socket_fd);
+            thread task(addingthread, buff, connect_fd, socket_fd,  b);
             task.detach();
             
         }
