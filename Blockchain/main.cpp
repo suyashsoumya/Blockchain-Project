@@ -5,7 +5,7 @@
 #include <cstring>
 #include <cstdlib>
 #include <sys/types.h>
-#include <sys/socket.h>
+#include <Winsock2.h>
 #include <unistd.h>
 #include <netinet/in.h>
 #include <fstream>
@@ -47,14 +47,14 @@ bool is_get_http(char* buff) {
 void addingthread(char* buff, int connect_fd, int socket_fd, &Blockchain b){
     
     
-    thread broadcast(broadcastthread, b);
+    thread broadcast(broadcastthread, b, connect_fd);
     broadcast.detach();
     memset(buff, '\0', sizeof(buff));
     recv(connect_fd, buff, BUFFSIZE - 1, 0);
     cout<<buff<<endl;
     //
-    // adding code here //
-    // code should be addBlock
+    time_t time1;
+    b.addBlock(buff, time(&time1));
     //
     send(connect_fd, buff, sizeof(buff), 0);
     close(connect_fd);
@@ -62,10 +62,12 @@ void addingthread(char* buff, int connect_fd, int socket_fd, &Blockchain b){
     
 }
 
-void broadcastthread(&Blockchain b){
+void broadcastthread(&Blockchain b, int connect_fd){
     
     
     sleep(30);
+    char * s= b.returnBlockchainAsString();
+    send(connect_fd, s, sizeof(s) ,0);
     // fill it with your output char * s = b.output();
 }
 
