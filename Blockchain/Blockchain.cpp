@@ -1,8 +1,8 @@
 #include "Blockchain.h"
 
 
-Blockchain::Blockchain(){
-    difficulty = 1;
+Blockchain::Blockchain(int difficulty){
+    this->difficulty = difficulty;
 }
 
 vector<Block> Blockchain::getBlockchain() { return blockchain; }

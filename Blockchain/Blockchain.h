@@ -10,7 +10,7 @@ private:
     vector<Block> blockchain;
     int difficulty;
 public:
-    Blockchain();
+    Blockchain(int difficulty);
     vector<Block> getBlockchain();
     Block getLastBlock();
     bool isBlockchainValid();
