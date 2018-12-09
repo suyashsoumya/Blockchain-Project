@@ -7,7 +7,7 @@ int main(){
     
     cout << "Mining Block 0..." << endl;
     time_t time1;
-    b.addBlock("Hello", time(&time1)); //pass in data & timestamp
+    b.addBlock("Hello", time(&time1)); // pass in data & timestamp
     cout << "Mining Block 0 complete" << endl;
 
     cout << "Mining Block 1..." << endl;
